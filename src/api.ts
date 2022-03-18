@@ -1,7 +1,7 @@
 const BASE_URL = `https://api.coinpaprika.com/v1`;
 
-export async function fecthCoins() {
-  return await await (await fetch(`${BASE_URL}/coins`)).json();
+export async function fecthAllCoinsTickers() {
+  return await await (await fetch(`${BASE_URL}/tickers`)).json();
 }
 
 export async function fetchCoinInfo(coinId: string) {
