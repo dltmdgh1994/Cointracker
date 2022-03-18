@@ -16,12 +16,14 @@ const Header = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 50px;
+  margin-bottom: 50px;
 `;
 
 const Title = styled.h1`
-  font-size: 48px;
+  font-size: 72px;
+  font-weight: 700;
+  font-family: Arial, Helvetica, sans-serif;
   color: ${(props) => props.theme.accentColor};
 `;
 
@@ -43,7 +45,7 @@ interface PercentProps {
 const Price = styled.div<PercentProps>`
   display: flex;
   align-items: center;
-  margin-right: 20px;
+  margin-right: 10px;
   color: ${(props) =>
     props.isPriceUp ? props.theme.upColor : props.theme.downColor};
   transition: color 1s ease;
@@ -84,7 +86,7 @@ const CoinsList = styled.ul`
 const Coin = styled.li`
   display: flex;
   align-items: center;
-  background-color: white;
+  background-color: whitesmoke;
   color: ${(props) => props.theme.bgColor};
   border-radius: 15px;
   margin-bottom: 10px;
