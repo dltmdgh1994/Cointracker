@@ -13,23 +13,57 @@ import { fetchCoinInfo, fetchCoinTickers } from "../api";
 
 const Container = styled.div`
   padding: 0px 20px;
-  max-width: 480px;
+  width: 80%;
   margin: 0 auto;
 `;
-const Header = styled.header`
-  height: 10vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
 const Title = styled.h1`
-  font-size: 48px;
+  font-size: 72px;
+  font-weight: 700;
+  font-family: Arial, Helvetica, sans-serif;
   color: ${(props) => props.theme.accentColor};
 `;
 const Loader = styled.span`
   text-align: center;
   display: block;
 `;
+const Btn = styled.button``;
+const Header = styled.header`
+  height: 10vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 50px;
+  margin-bottom: 50px;
+`;
+
+const CoinInfo = styled.div`
+  display: grid;
+  grid-gap: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+  border-radius: 5px;
+  margin-bottom: 20px;
+`;
+const CoinInfoBox = styled.div`
+  height: 260px;
+  border-radius: 15px;
+  background-color: whitesmoke;
+  color: ${(props) => props.theme.bgColor};
+`;
+const Img = styled.img`
+  width: 35px;
+  height: 35px;
+  margin-right: 10px;
+`;
+const CoinTitle = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  h1 {
+    font-size: 30px;
+    font-weight: 700;
+  }
+`;
+
 const Overview = styled.div`
   display: flex;
   justify-content: space-between;
@@ -191,16 +225,36 @@ function Coin() {
         </title>
       </Helmet>
       <Header>
+        <Link to={`/`}>
+          <Btn>홈으로</Btn>
+        </Link>
         {/* state가 존재하면 name을 가져오고 아니면 로딩 */}
         {/* state를 통해 홈화면으로 올때만 정보 접근 가능 */}
         <Title>
-          {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
+          {state?.name ? state.name : loading ? "Loading..." : "COIN TRACKER"}
         </Title>
+        <div />
       </Header>
       {loading ? (
         <Loader>Loading...</Loader>
       ) : (
         <>
+          <CoinInfo>
+            <CoinInfoBox>
+              <CoinTitle>
+                <Img
+                  src={`https://cryptoicon-api.vercel.app/api/icon/${infoData?.symbol.toLowerCase()}`}
+                />
+                <h1>
+                  {infoData?.name}({infoData?.symbol})
+                </h1>
+              </CoinTitle>
+              <h1>야호</h1>
+            </CoinInfoBox>
+            <CoinInfoBox>
+              <h1>야호</h1>
+            </CoinInfoBox>
+          </CoinInfo>
           <Overview>
             <OverviewItem>
               <span>Rank:</span>

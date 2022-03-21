@@ -7,7 +7,7 @@ import { fecthAllCoinsTickers } from "../api";
 
 const Container = styled.div`
   padding: 0px 20px;
-  width: 70%;
+  width: 80%;
   margin: 0 auto;
 `;
 
@@ -45,29 +45,29 @@ interface PercentProps {
 const Price = styled.div<PercentProps>`
   display: flex;
   align-items: center;
-  margin-right: 10px;
+  margin-right: 8px;
   color: ${(props) =>
     props.isPriceUp ? props.theme.upColor : props.theme.downColor};
   transition: color 1s ease;
 `;
 
 const ArrowStatus = styled.span`
-  font-size: 20px;
+  font-size: 18px;
 `;
 
 const PriceStatus = styled.h1`
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
 `;
 
 const PricePercentStatus = styled.div`
-  font-size: 20px;
+  font-size: 18px;
 `;
 
 const PricePercent = styled.div<PercentProps>`
   display: flex;
   align-items: center;
-  margin-right: 20px;
+  margin-right: 12px;
   padding: 5px 7px;
   background-color: ${(props) =>
     props.isPriceUp ? props.theme.upColor : props.theme.downColor};
@@ -77,10 +77,9 @@ const PricePercent = styled.div<PercentProps>`
 `;
 
 const CoinsList = styled.ul`
-  width: 100%;
   display: grid;
   grid-gap: 30px;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
 `;
 
 const Coin = styled.li`
@@ -91,7 +90,7 @@ const Coin = styled.li`
   border-radius: 15px;
   margin-bottom: 10px;
   a {
-    padding: 20px;
+    padding: 15px;
     transition: color 0.2s ease-in; // 속성을 서서히 변화
     display: flex;
     align-items: center;
