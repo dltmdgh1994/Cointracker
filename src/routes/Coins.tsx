@@ -10,7 +10,6 @@ const Container = styled.div`
   width: 80%;
   margin: 0 auto;
 `;
-
 const Header = styled.header`
   height: 10vh;
   display: flex;
@@ -19,19 +18,16 @@ const Header = styled.header`
   margin-top: 50px;
   margin-bottom: 50px;
 `;
-
 const Title = styled.h1`
   font-size: 72px;
   font-weight: 700;
   font-family: Arial, Helvetica, sans-serif;
   color: ${(props) => props.theme.accentColor};
 `;
-
 const Loader = styled.span`
   text-align: center;
   display: block;
 `;
-
 const Img = styled.img`
   width: 35px;
   height: 35px;

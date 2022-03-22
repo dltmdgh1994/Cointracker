@@ -26,7 +26,6 @@ const Loader = styled.span`
   text-align: center;
   display: block;
 `;
-const Btn = styled.button``;
 const Header = styled.header`
   height: 10vh;
   display: flex;
@@ -35,7 +34,10 @@ const Header = styled.header`
   margin-top: 50px;
   margin-bottom: 50px;
 `;
-
+const CoinBody = styled.div`
+  display: flex;
+  justify-content: center;
+`;
 const CoinInfo = styled.div`
   display: grid;
   grid-gap: 30px;
@@ -44,7 +46,7 @@ const CoinInfo = styled.div`
   margin-bottom: 20px;
 `;
 const CoinInfoBox = styled.div`
-  height: 260px;
+  height: 25vh;
   border-radius: 15px;
   background-color: whitesmoke;
   color: ${(props) => props.theme.bgColor};
@@ -52,16 +54,28 @@ const CoinInfoBox = styled.div`
 const Img = styled.img`
   width: 35px;
   height: 35px;
-  margin-right: 10px;
 `;
 const CoinTitle = styled.div`
   display: flex;
   align-items: center;
-  padding: 20px;
+  padding: 10px;
+  margin-top: 10px;
+  margin-left: 10px;
   h1 {
     font-size: 30px;
     font-weight: 700;
+    margin-left: 10px;
   }
+`;
+const CoinDetail = styled.div`
+  padding: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  word-break: break-all;
+  font-weight: 600;
 `;
 
 const Overview = styled.div`
@@ -226,7 +240,7 @@ function Coin() {
       </Helmet>
       <Header>
         <Link to={`/`}>
-          <Btn>홈으로</Btn>
+          <Img src="home.png" />
         </Link>
         {/* state가 존재하면 name을 가져오고 아니면 로딩 */}
         {/* state를 통해 홈화면으로 올때만 정보 접근 가능 */}
@@ -235,40 +249,35 @@ function Coin() {
         </Title>
         <div />
       </Header>
+
       {loading ? (
         <Loader>Loading...</Loader>
       ) : (
         <>
-          <CoinInfo>
-            <CoinInfoBox>
-              <CoinTitle>
-                <Img
-                  src={`https://cryptoicon-api.vercel.app/api/icon/${infoData?.symbol.toLowerCase()}`}
-                />
-                <h1>
-                  {infoData?.name}({infoData?.symbol})
-                </h1>
-              </CoinTitle>
-              <h1>야호</h1>
-            </CoinInfoBox>
-            <CoinInfoBox>
-              <h1>야호</h1>
-            </CoinInfoBox>
-          </CoinInfo>
-          <Overview>
-            <OverviewItem>
-              <span>Rank:</span>
-              <span>{infoData?.rank}</span>
-            </OverviewItem>
-            <OverviewItem>
-              <span>Symbol:</span>
-              <span>${infoData?.symbol}</span>
-            </OverviewItem>
-            <OverviewItem>
-              <span>Price:</span>
-              <span>${tickersData?.quotes.USD.price.toFixed(2)}</span>
-            </OverviewItem>
-          </Overview>
+          <CoinBody>
+            <CoinInfo>
+              <CoinInfoBox>
+                <CoinTitle>
+                  <Img
+                    src={`https://cryptoicon-api.vercel.app/api/icon/${infoData?.symbol.toLowerCase()}`}
+                  />
+                  <h1>
+                    {infoData?.name}({infoData?.symbol})
+                  </h1>
+                </CoinTitle>
+                <CoinDetail>
+                  {infoData?.description.length! >= 200
+                    ? infoData?.description.substring(0, 200) + "..."
+                    : infoData?.description}
+                </CoinDetail>
+                <h1>Org Structure : </h1>
+                <h1>Hash Algorithm : </h1>
+              </CoinInfoBox>
+              <CoinInfoBox>
+                <h1>야호</h1>
+              </CoinInfoBox>
+            </CoinInfo>
+          </CoinBody>
           <Overview>
             <OverviewItem>
               <span>Total Suply:</span>
