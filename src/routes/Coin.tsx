@@ -27,7 +27,6 @@ const Loader = styled.span`
   display: block;
 `;
 const Header = styled.header`
-  height: 10vh;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -46,7 +45,7 @@ const CoinInfo = styled.div`
   margin-bottom: 20px;
 `;
 const CoinInfoBox = styled.div`
-  height: 25vh;
+  height: 30vh;
   border-radius: 15px;
   background-color: whitesmoke;
   color: ${(props) => props.theme.bgColor};
@@ -61,6 +60,8 @@ const CoinTitle = styled.div`
   padding: 10px;
   margin-top: 10px;
   margin-left: 10px;
+  margin-right: 10px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
   h1 {
     font-size: 30px;
     font-weight: 700;
@@ -76,28 +77,36 @@ const CoinDetail = styled.div`
   justify-content: center;
   word-break: break-all;
   font-weight: 600;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
 `;
-
-const Overview = styled.div`
-  display: flex;
-  justify-content: space-between;
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 10px 20px;
-  border-radius: 10px;
-  margin-bottom: 10px;
-`;
-const OverviewItem = styled.div`
+const CoinTheory = styled.div`
+  padding: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 33%;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+  font-weight: 600;
   span:first-child {
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 400;
-    text-transform: uppercase;
-    margin-bottom: 5px;
+    padding-bottom: 8px;
+  }
+  &:last-child {
+    border: none;
   }
 `;
+
+const CoinPrice = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+`;
+
 const Tabs = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -270,24 +279,20 @@ function Coin() {
                     ? infoData?.description.substring(0, 200) + "..."
                     : infoData?.description}
                 </CoinDetail>
-                <h1>Org Structure : </h1>
-                <h1>Hash Algorithm : </h1>
+                <CoinTheory>
+                  <span>Org Structure</span>
+                  <span>{infoData?.org_structure}</span>
+                </CoinTheory>
+                <CoinTheory>
+                  <span>Hash Algorithm</span>
+                  <span>{infoData?.hash_algorithm}</span>
+                </CoinTheory>
               </CoinInfoBox>
               <CoinInfoBox>
                 <h1>야호</h1>
               </CoinInfoBox>
             </CoinInfo>
           </CoinBody>
-          <Overview>
-            <OverviewItem>
-              <span>Total Suply:</span>
-              <span>{tickersData?.total_supply}</span>
-            </OverviewItem>
-            <OverviewItem>
-              <span>Max Supply:</span>
-              <span>{tickersData?.max_supply}</span>
-            </OverviewItem>
-          </Overview>
           <Tabs>
             <Tab isActive={chartMatch !== null}>
               <Link to={`/${coinId}/chart`}>Chart</Link>
