@@ -79,7 +79,7 @@ const CoinDetail = styled.div`
   font-weight: 600;
   border-bottom: 2px solid rgba(0, 0, 0, 0.1);
 `;
-const CoinTheory = styled.div`
+const CoinBasicBox = styled.div`
   padding: 10px;
   margin-left: 10px;
   margin-right: 10px;
@@ -97,9 +97,42 @@ const CoinTheory = styled.div`
   }
 `;
 
+interface PercentProps {
+  isPriceUp: boolean;
+}
+const Price = styled.div<PercentProps>`
+  display: flex;
+  align-items: center;
+  margin-right: 8px;
+  color: ${(props) =>
+    props.isPriceUp ? props.theme.upColor : props.theme.downColor};
+  transition: color 1s ease;
+`;
+const ArrowStatus = styled.span`
+  font-size: 18px;
+`;
+const PriceStatus = styled.h1`
+  font-size: 30px;
+  font-weight: 700;
+`;
+const PricePercentStatus = styled.div`
+  font-size: 20px;
+  font-weight: 700;
+`;
+const PricePercent = styled.div<PercentProps>`
+  display: flex;
+  align-items: center;
+  padding: 5px 7px;
+  background-color: ${(props) =>
+    props.isPriceUp ? props.theme.upColor : props.theme.downColor};
+  color: white;
+  border-radius: 5px;
+  transition: background-color 1s ease;
+`;
 const CoinPrice = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 10px;
   margin-top: 10px;
   margin-left: 10px;
@@ -207,7 +240,7 @@ function Coin() {
   // react-router-dom이 보내주는 location object에 접근
   const { state } = useLocation() as ILocation;
   const chartMatch = useMatch("/:coinId/chart");
-  const priceMatch = useMatch("/:coinId/price");
+  const predictionMatch = useMatch("/:coinId/prediction");
 
   // react-query 사용 전
   // useEffect(() => {
@@ -279,17 +312,92 @@ function Coin() {
                     ? infoData?.description.substring(0, 200) + "..."
                     : infoData?.description}
                 </CoinDetail>
-                <CoinTheory>
+                <CoinBasicBox>
                   <span>Org Structure</span>
                   <span>{infoData?.org_structure}</span>
-                </CoinTheory>
-                <CoinTheory>
+                </CoinBasicBox>
+                <CoinBasicBox>
                   <span>Hash Algorithm</span>
                   <span>{infoData?.hash_algorithm}</span>
-                </CoinTheory>
+                </CoinBasicBox>
               </CoinInfoBox>
               <CoinInfoBox>
-                <h1>야호</h1>
+                <CoinPrice>
+                  <Price
+                    isPriceUp={
+                      tickersData?.quotes.USD.percent_change_24h
+                        ? tickersData?.quotes.USD.percent_change_24h > 0
+                        : false
+                    }
+                  >
+                    <PriceStatus>
+                      $
+                      {tickersData?.quotes.USD.price
+                        .toFixed(2)
+                        .toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                    </PriceStatus>
+                  </Price>
+                  <PricePercent
+                    isPriceUp={
+                      tickersData?.quotes.USD.percent_change_24h
+                        ? tickersData?.quotes.USD.percent_change_24h > 0
+                        : false
+                    }
+                  >
+                    <ArrowStatus>
+                      {(
+                        tickersData?.quotes.USD.percent_change_24h
+                          ? tickersData?.quotes.USD.percent_change_24h > 0
+                          : false
+                      )
+                        ? "▲ "
+                        : "▼ "}
+                    </ArrowStatus>
+                    <PricePercentStatus>
+                      {(
+                        tickersData?.quotes.USD.percent_change_24h
+                          ? tickersData?.quotes.USD.percent_change_24h > 0
+                          : false
+                      )
+                        ? tickersData!.quotes.USD.percent_change_24h
+                            .toFixed(1)
+                            .toString()
+                        : tickersData!.quotes.USD.percent_change_24h
+                            .toFixed(1)
+                            .toString()
+                            .replace("-", "")}
+                      %
+                    </PricePercentStatus>
+                  </PricePercent>
+                </CoinPrice>
+                <CoinBasicBox>
+                  <span>All Time High</span>
+                  <span>
+                    $
+                    {tickersData?.quotes.USD.ath_price
+                      .toFixed(2)
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+                    ← {tickersData?.quotes.USD.ath_date.toString().slice(0, 10)}
+                  </span>
+                </CoinBasicBox>
+                <CoinBasicBox>
+                  <span>Market Cap</span>
+                  <span>
+                    $
+                    {tickersData?.quotes.USD.market_cap
+                      .toFixed(2)
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  </span>
+                </CoinBasicBox>
+                <CoinBasicBox>
+                  <span>Supply</span>
+                  <span>
+                    {tickersData?.total_supply} / {tickersData?.max_supply}(Max)
+                  </span>
+                </CoinBasicBox>
               </CoinInfoBox>
             </CoinInfo>
           </CoinBody>
@@ -297,8 +405,8 @@ function Coin() {
             <Tab isActive={chartMatch !== null}>
               <Link to={`/${coinId}/chart`}>Chart</Link>
             </Tab>
-            <Tab isActive={priceMatch !== null}>
-              <Link to={`/${coinId}/price`}>Price</Link>
+            <Tab isActive={predictionMatch !== null}>
+              <Link to={`/${coinId}/prediction`}>Prediction</Link>
             </Tab>
           </Tabs>
           {/* Router에서 nested routes로 정의 */}
